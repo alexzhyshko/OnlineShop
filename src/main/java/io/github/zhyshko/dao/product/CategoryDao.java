@@ -14,4 +14,8 @@ public interface CategoryDao extends JpaRepository<Category, Long> {
 
     Optional<Category> findByExternalId(UUID externalId);
 
+    @Query(value = """
+SELECT c.* FROM categories as c WHERE c.supercategory_id IS NULL
+""", nativeQuery = true)
+    List<Category> findAllBySupercategoryIdIsNull();
 }

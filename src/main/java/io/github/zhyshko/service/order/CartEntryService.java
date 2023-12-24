@@ -7,4 +7,6 @@ public interface CartEntryService {
 
     CartEntry saveOrUpdate(CartEntry orderEntry);
 
+    void remove(CartEntry cartEntry);
+
 }

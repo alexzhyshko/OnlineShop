@@ -31,4 +31,9 @@ public class DefaultCartEntryService implements CartEntryService {
                 .orElseGet(() -> cartEntryDao.save(cartEntry));
     }
 
+    @Override
+    public void remove(CartEntry cartEntry) {
+        cartEntryDao.delete(cartEntry);
+    }
+
 }

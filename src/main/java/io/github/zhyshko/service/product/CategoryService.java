@@ -7,4 +7,8 @@ import java.util.UUID;
 
 public interface CategoryService {
 
+    List<Category> getAll();
+
+    Category getByExternalId(UUID externalId);
+
 }

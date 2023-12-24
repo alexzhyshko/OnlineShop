@@ -25,6 +25,9 @@ public class DatabasePopulator {
 
     private static final UUID USER_1_ID = UUID.fromString("d8678259-9d59-44ce-b96d-2a5c024cab32");
     private static final UUID USER_2_ID = UUID.fromString("afb19e29-bca8-4b44-b6b7-c4928a249980");
+    private static final UUID SUBCATEGORY1_ID = UUID.randomUUID();
+    private static final UUID SUBCATEGORY2_ID = UUID.randomUUID();
+    private static final UUID CATEGORY_ID = UUID.randomUUID();
 
     public void populateDatabase() {
 
@@ -35,7 +38,7 @@ public class DatabasePopulator {
     }
 
     public OrderData getOrder() {
-        return createOrder(List.of(createOrderEntry1(1), createOrderEntry2(1)), createUserData1());
+        return createOrder(List.of(createOrderEntry1(1), createOrderEntry2(1), createOrderEntry3(1)), createUserData1());
     }
 
     private OrderData createOrder(List<OrderEntryData> orderEntryDataList, UserData userData) {
@@ -104,7 +107,7 @@ public class DatabasePopulator {
                 .productAttributes(List.of(createProductAttributeData()))
                 .authors(List.of(createAuthorData()))
                 .publishers(List.of(createPublisherData()))
-                .categories(List.of(createCategoryData()))
+                .categories(List.of(createSubcategory2Data()))
                 .name("aadadad")
                 .type(ProductTypeEnum.PHYSICAL)
                 .price(10.99d)
@@ -117,7 +120,7 @@ public class DatabasePopulator {
                 .productAttributes(List.of(createProductAttributeData()))
                 .authors(List.of(createAuthorData()))
                 .publishers(List.of(createPublisherData()))
-                .categories(List.of(createCategoryData()))
+                .categories(List.of(createSubcategory1Data()))
                 .name("aadadad2")
                 .type(ProductTypeEnum.PHYSICAL)
                 .price(1.99d)
@@ -138,15 +141,26 @@ public class DatabasePopulator {
     }
 
     private CategoryData createCategoryData() {
-        CategoryData subCategoryData = CategoryData.builder()
-                .externalId(UUID.randomUUID())
+        return CategoryData.builder()
+                .externalId(CATEGORY_ID)
+                .subcategories(List.of(createSubcategory1Data()))
+                .name("Category")
                 .build();
+    }
 
-        CategoryData categoryData = CategoryData.builder()
-                .externalId(UUID.randomUUID())
-                .subcategories(List.of(subCategoryData))
+    private CategoryData createSubcategory1Data() {
+        return CategoryData.builder()
+                .externalId(SUBCATEGORY1_ID)
+                .subcategories(List.of(createSubcategory2Data()))
+                .name("Subcategory 1")
                 .build();
-        return categoryData;
+    }
+
+    private CategoryData createSubcategory2Data() {
+        return CategoryData.builder()
+                .externalId(SUBCATEGORY2_ID)
+                .name("Subcategory 2")
+                .build();
     }
 
     private PublisherData createPublisherData() {

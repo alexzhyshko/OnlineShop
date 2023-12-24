@@ -15,4 +15,7 @@ public interface ProductDao extends JpaRepository<Product, Long> {
 
     Optional<Product> findByExternalId(UUID externalId);
 
+    List<Product> findAllByCategoriesExternalIdIn(List<UUID> categoryExternalIds);
+
+    List<Product> findAllByNameContains(String term);
 }

@@ -6,6 +6,8 @@ import io.github.zhyshko.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class DefaultOrderService implements OrderService {
 
@@ -19,5 +21,10 @@ public class DefaultOrderService implements OrderService {
     @Override
     public void save(Order order) {
         this.orderDao.save(order);
+    }
+
+    @Override
+    public boolean userOrdersExist(UUID userExternalId) {
+        return orderDao.existsByOwnerExternalId(userExternalId);
     }
 }

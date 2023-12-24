@@ -14,4 +14,8 @@ public interface ProductService {
     Product getOrCreate(Product product);
 
     Optional<Product> get(UUID externalId);
+
+    List<Product> getAllByCategories(List<UUID> categoryExternalIds);
+
+    List<Product> getAllByTerm(String term);
 }

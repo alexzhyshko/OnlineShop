@@ -15,4 +15,13 @@ public class DefaultCategoryService implements CategoryService {
     @Autowired
     private CategoryDao categoryDao;
 
+    @Override
+    public List<Category> getAll() {
+        return categoryDao.findAllBySupercategoryIdIsNull();
+    }
+
+    @Override
+    public Category getByExternalId(UUID externalId) {
+        return categoryDao.findByExternalId(externalId).orElseThrow(() -> new RuntimeException("No such category found"));
+    }
 }

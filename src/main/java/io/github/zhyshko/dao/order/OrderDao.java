@@ -12,4 +12,5 @@ public interface OrderDao extends JpaRepository<Order, Long> {
 
     Optional<Order> findByExternalId(UUID externalId);
 
+    boolean existsByOwnerExternalId(UUID userExternalId);
 }

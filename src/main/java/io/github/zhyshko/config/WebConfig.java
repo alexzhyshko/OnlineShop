@@ -9,6 +9,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import java.util.List;
 import java.util.logging.Filter;
@@ -30,7 +31,9 @@ public class WebConfig {
         ));
         config.setAllowedMethods(List.of(
                 HttpMethod.GET.name(),
-                HttpMethod.POST.name()
+                HttpMethod.POST.name(),
+                HttpMethod.PATCH.name(),
+                HttpMethod.DELETE.name()
         ));
         config.setMaxAge(3600L);
         source.registerCorsConfiguration("/**", config);

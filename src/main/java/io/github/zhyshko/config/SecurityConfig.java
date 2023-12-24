@@ -29,6 +29,19 @@ public class SecurityConfig {
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(requests -> {
                             requests.requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register", "/auth/refresh").permitAll();
+                            requests.requestMatchers("/category/**").permitAll();
+                            requests.requestMatchers("/search/**").permitAll();
+                            requests.requestMatchers("/recommendations/**").permitAll();
+                            requests.requestMatchers("/v2/api-docs",
+                                    "/v3/api-docs",
+                                    "/v3/api-docs/**",
+                                    "/swagger-resources",
+                                    "/swagger-resources/**",
+                                    "/configuration/ui",
+                                    "/configuration/security",
+                                    "/swagger-ui/**",
+                                    "/webjars/**",
+                                    "/swagger-ui.html").permitAll();
                             requests.anyRequest().authenticated();
                         }
                 );

@@ -8,4 +8,8 @@ public interface CartFacade {
 
     void addToCart(UUID productExternalId, Integer quantity);
 
+    void changeCount(UUID productExternalId, Integer quantity);
+
+    void removeEntry(UUID productExternalId);
+
 }

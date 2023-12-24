@@ -20,4 +20,15 @@ public class CartController {
         cartFacade.addToCart(productExternalId, quantity);
     }
 
+    @PatchMapping("/update")
+    public void updateCart(@RequestParam UUID productExternalId,
+                          @RequestParam Integer quantity) {
+        cartFacade.changeCount(productExternalId, quantity);
+    }
+
+    @DeleteMapping("/delete")
+    public void deleteFromCart(@RequestParam UUID productExternalId) {
+        cartFacade.removeEntry(productExternalId);
+    }
+
 }

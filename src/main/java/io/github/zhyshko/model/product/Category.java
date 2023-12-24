@@ -17,6 +17,7 @@ import java.util.List;
 public class Category extends Base {
 
     @OneToMany(cascade= CascadeType.ALL)
+    @JoinColumn(name = "supercategory_id", referencedColumnName = "id")
     private List<Category> subcategories;
     private String name;
 

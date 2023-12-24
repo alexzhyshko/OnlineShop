@@ -4,10 +4,12 @@ import io.github.zhyshko.dao.user.UserDao;
 import io.github.zhyshko.dto.user.UserData;
 import io.github.zhyshko.model.user.User;
 import io.github.zhyshko.service.user.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -15,6 +17,8 @@ public class DefaultUserService implements UserService {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private HttpSession httpSession;
 
     @Override
     public User createUser(User user) {
@@ -45,5 +49,10 @@ public class DefaultUserService implements UserService {
     @Override
     public User getByExternalId(UUID externalId) {
         return userDao.findByExternalId(externalId).orElseThrow(() ->  new RuntimeException("User not found for such id"));
+    }
+
+    @Override
+    public Optional<UUID> getCurrentUserExternalId() {
+        return Optional.ofNullable((UUID) httpSession.getAttribute("userId"));
     }
 }

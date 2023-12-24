@@ -40,5 +40,15 @@ public class DefaultProductService implements ProductService {
         return productDao.findByExternalId(externalId);
     }
 
+    @Override
+    public List<Product> getAllByCategories(List<UUID> categoryExternalIds) {
+        return productDao.findAllByCategoriesExternalIdIn(categoryExternalIds);
+    }
+
+    @Override
+    public List<Product> getAllByTerm(String term) {
+        return productDao.findAllByNameContains(term);
+    }
+
 
 }
