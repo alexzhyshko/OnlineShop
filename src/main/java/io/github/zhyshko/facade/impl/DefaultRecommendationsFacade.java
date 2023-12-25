@@ -1,9 +1,11 @@
 package io.github.zhyshko.facade.impl;
 
 import io.github.zhyshko.client.RecommendationsClient;
+import io.github.zhyshko.dto.order.OrderData;
 import io.github.zhyshko.dto.product.ProductData;
 import io.github.zhyshko.facade.RecommendationsFacade;
 import io.github.zhyshko.mapper.dto.product.ProductMapper;
+import io.github.zhyshko.mapper.wsdto.order.OrderWsDtoMapper;
 import io.github.zhyshko.service.order.OrderService;
 import io.github.zhyshko.service.product.ProductService;
 import io.github.zhyshko.service.store.StoreService;
@@ -33,6 +35,8 @@ public class DefaultRecommendationsFacade implements RecommendationsFacade {
     private ProductService productService;
     @Autowired
     private ProductMapper productMapper;
+    @Autowired
+    private OrderWsDtoMapper orderWsDtoMapper;
 
     @Override
     public List<ProductData> getHomepageRecommendations() {
@@ -56,5 +60,15 @@ public class DefaultRecommendationsFacade implements RecommendationsFacade {
                     return recommendationsClient.getGeneralRecommendations(storeExternalId);
                 })
                 .orElseGet(() -> recommendationsClient.getGeneralRecommendations(storeExternalId));
+    }
+
+    @Override
+    public void sendOrder(OrderData orderData) {
+        recommendationsClient.sendOrder(orderWsDtoMapper.toWsDto(orderData));
+    }
+
+    @Override
+    public void sendReview(OrderData orderData) {
+        recommendationsClient.sendReview(orderWsDtoMapper.toWsDto(orderData));
     }
 }

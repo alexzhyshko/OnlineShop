@@ -17,5 +17,6 @@ public class ReviewEntryData {
 
     private LocalDateTime timeCreated;
     private Integer mark;
+    private String text;
 
 }

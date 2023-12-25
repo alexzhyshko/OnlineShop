@@ -86,4 +86,9 @@ public class DefaultCartFacade implements CartFacade {
         cartEntryService.remove(entry);
     }
 
+    @Override
+    public CartData getCart() {
+        return cartMapper.toDto(cartService.getCurrentCart());
+    }
+
 }

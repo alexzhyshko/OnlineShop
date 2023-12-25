@@ -1,5 +1,6 @@
 package io.github.zhyshko.dto.order;
 
+import io.github.zhyshko.dto.user.AddressData;
 import io.github.zhyshko.dto.user.UserData;
 import io.github.zhyshko.model.order.*;
 import lombok.*;
@@ -25,5 +26,6 @@ public class OrderData {
     private PaymentModeEnum paymentMode;
     private DeliveryModeEnum deliveryMode;
     private PaymentData payment;
+    private AddressData address;
 
 }

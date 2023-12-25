@@ -47,6 +47,7 @@ public abstract class ReviewEntryMapper {
         reviewEntry.externalId(reviewEntryData.getExternalId());
         reviewEntry.mark(reviewEntryData.getMark());
         reviewEntry.timeCreated(reviewEntryData.getTimeCreated());
+        reviewEntry.text(reviewEntryData.getText());
 
         return reviewEntry.build();
     }

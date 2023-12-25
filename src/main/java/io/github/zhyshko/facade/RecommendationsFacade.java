@@ -1,5 +1,6 @@
 package io.github.zhyshko.facade;
 
+import io.github.zhyshko.dto.order.OrderData;
 import io.github.zhyshko.dto.product.ProductData;
 import io.github.zhyshko.wsdto.recommmendations.RecommendationsResponse;
 
@@ -11,4 +12,7 @@ public interface RecommendationsFacade {
 
     List<RecommendationsResponse> getRecommendations();
 
+    void sendOrder(OrderData orderData);
+
+    void sendReview(OrderData orderData);
 }

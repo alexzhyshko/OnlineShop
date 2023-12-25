@@ -18,5 +18,6 @@ public class ReviewEntry extends Base {
 
     private LocalDateTime timeCreated;
     private Integer mark;
+    private String text;
 
 }

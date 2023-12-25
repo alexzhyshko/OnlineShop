@@ -1,5 +1,6 @@
 package io.github.zhyshko.controller;
 
+import io.github.zhyshko.dto.order.CartData;
 import io.github.zhyshko.dto.order.CartEntryData;
 import io.github.zhyshko.facade.CartFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,11 @@ public class CartController {
 
     @Autowired
     private CartFacade cartFacade;
+
+    @GetMapping
+    public CartData getCart() {
+        return cartFacade.getCart();
+    }
 
     @PostMapping("/add")
     public void addToCart(@RequestParam UUID productExternalId,

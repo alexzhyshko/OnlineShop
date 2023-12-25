@@ -1,6 +1,7 @@
 package io.github.zhyshko.model.order;
 
 import io.github.zhyshko.model.Base;
+import io.github.zhyshko.model.user.Address;
 import io.github.zhyshko.model.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,5 +35,7 @@ public class Order extends Base {
     private DeliveryMode deliveryMode;
     @OneToOne(cascade = CascadeType.ALL)
     private Payment payment;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Address address;
 
 }

@@ -1,5 +1,6 @@
 package io.github.zhyshko.facade;
 
+import io.github.zhyshko.dto.order.CartData;
 import io.github.zhyshko.dto.order.CartEntryData;
 
 import java.util.UUID;
@@ -12,4 +13,5 @@ public interface CartFacade {
 
     void removeEntry(UUID productExternalId);
 
+    CartData getCart();
 }

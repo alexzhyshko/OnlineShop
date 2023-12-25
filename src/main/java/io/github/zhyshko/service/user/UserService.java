@@ -8,6 +8,8 @@ import java.util.UUID;
 
 public interface UserService {
 
+    User save(User user);
+
     User createUser(User user);
 
     boolean existsByEmail(String email);

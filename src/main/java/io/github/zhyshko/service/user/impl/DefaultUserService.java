@@ -21,6 +21,11 @@ public class DefaultUserService implements UserService {
     private HttpSession httpSession;
 
     @Override
+    public User save(User user) {
+        return userDao.save(user);
+    }
+
+    @Override
     public User createUser(User user) {
         user.setExternalId(UUID.randomUUID());
         return userDao.save(user);

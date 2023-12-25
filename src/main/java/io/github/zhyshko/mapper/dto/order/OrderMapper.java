@@ -4,6 +4,7 @@ import io.github.zhyshko.dao.order.OrderDao;
 import io.github.zhyshko.dao.order.PaymentStatusDao;
 import io.github.zhyshko.dto.order.OrderData;
 import io.github.zhyshko.dto.order.OrderEntryData;
+import io.github.zhyshko.mapper.dto.user.AddressMapper;
 import io.github.zhyshko.mapper.dto.user.UserMapper;
 import io.github.zhyshko.model.order.Order;
 import io.github.zhyshko.model.order.OrderEntry;
@@ -39,6 +40,8 @@ public abstract class OrderMapper {
     protected PaymentModeService paymentModeService;
     @Autowired
     protected PaymentMapper paymentMapper;
+    @Autowired
+    protected AddressMapper addressMapper;
 
     public Order toModel(OrderData orderData) {
         if (orderData == null) {
@@ -72,6 +75,7 @@ public abstract class OrderMapper {
         order.deliveryMode(deliveryModeService.getOrCreate(orderData.getDeliveryMode()));
         order.paymentMode(paymentModeService.getOrCreate(orderData.getPaymentMode()));
         order.payment(paymentMapper.toModel(orderData.getPayment()));
+        order.address(addressMapper.toModel(orderData.getAddress()));
 
         return order.build();
     }
