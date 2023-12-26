@@ -15,4 +15,9 @@ public class DefaultProductAttributeService implements ProductAttributeService {
     @Autowired
     private ProductAttributeDao productAttributeDao;
 
+    @Override
+    public ProductAttribute getOrCreate(ProductAttribute productAttribute) {
+        return productAttributeDao.findByExternalId(productAttribute.getExternalId())
+                .orElseGet(() -> productAttributeDao.save(productAttribute));
+    }
 }

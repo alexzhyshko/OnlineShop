@@ -7,4 +7,5 @@ import java.util.UUID;
 
 public interface AuthorService {
 
+    Author getOrCreate(Author author);
 }

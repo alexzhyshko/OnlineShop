@@ -3,6 +3,7 @@ package io.github.zhyshko.mapper.dto.product;
 import io.github.zhyshko.dao.product.AuthorDao;
 import io.github.zhyshko.dto.product.AuthorData;
 import io.github.zhyshko.model.product.Author;
+import io.github.zhyshko.service.product.AuthorService;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,15 +13,14 @@ import java.util.List;
 public abstract class AuthorMapper {
 
     @Autowired
-    protected AuthorDao authorDao;
+    protected AuthorService authorService;
 
-    public Author toModel(AuthorData orderData) {
-        if ( orderData == null ) {
+    public Author toModel(AuthorData authorData) {
+        if ( authorData == null ) {
             return null;
         }
 
-        return authorDao.findByExternalId(orderData.getExternalId())
-                .orElseGet(() -> authorDao.save(createAuthor(orderData)));
+        return authorService.getOrCreate(createAuthor(authorData));
     }
     public abstract AuthorData toDto(Author order);
 

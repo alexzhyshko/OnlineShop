@@ -4,6 +4,7 @@ import io.github.zhyshko.dao.product.PublisherDao;
 import io.github.zhyshko.dto.product.PublisherData;
 import io.github.zhyshko.mapper.dto.user.AddressMapper;
 import io.github.zhyshko.model.product.Publisher;
+import io.github.zhyshko.service.product.PublisherService;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +15,16 @@ import java.util.List;
 public abstract class PublisherMapper {
 
     @Autowired
-    protected PublisherDao publisherDao;
-    protected AddressMapper addressMapper = Mappers.getMapper(AddressMapper.class);
+    protected PublisherService publisherService;
+    @Autowired
+    protected AddressMapper addressMapper;
 
     public Publisher toModel(PublisherData orderData) {
         if ( orderData == null ) {
             return null;
         }
 
-        return publisherDao.findByExternalId(orderData.getExternalId())
-                .orElseGet(() -> publisherDao.save(createPublisher(orderData)));
+        return publisherService.getOrCreate(createPublisher(orderData));
     }
     public abstract PublisherData toDto(Publisher order);
 

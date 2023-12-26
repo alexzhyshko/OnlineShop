@@ -25,7 +25,7 @@ public class SearchController {
     }
 
     @GetMapping
-    public List<ProductData> searchByCategory(@RequestParam String term, @RequestParam int page) {
+    public List<ProductData> searchByTerm(@RequestParam String term, @RequestParam int page) {
         return searchFacade.searchByTerm(term).stream()
                 .skip((page - 1) * 50)
                 .limit(page * 50)

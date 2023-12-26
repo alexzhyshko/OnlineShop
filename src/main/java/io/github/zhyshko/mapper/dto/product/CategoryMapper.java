@@ -3,6 +3,7 @@ package io.github.zhyshko.mapper.dto.product;
 import io.github.zhyshko.dao.product.CategoryDao;
 import io.github.zhyshko.dto.product.CategoryData;
 import io.github.zhyshko.model.product.Category;
+import io.github.zhyshko.service.product.CategoryService;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,15 +14,14 @@ import java.util.List;
 public abstract class CategoryMapper {
 
     @Autowired
-    protected CategoryDao categoryDao;
+    protected CategoryService categoryService;
 
-    public Category toModel(CategoryData orderData) {
-        if ( orderData == null ) {
+    public Category toModel(CategoryData categoryData) {
+        if ( categoryData == null ) {
             return null;
         }
 
-        return categoryDao.findByExternalId(orderData.getExternalId())
-                .orElseGet(() -> categoryDao.save(createCategory(orderData)));
+        return categoryService.findOrCreate(createCategory(categoryData));
     }
     public abstract CategoryData toDto(Category order);
 

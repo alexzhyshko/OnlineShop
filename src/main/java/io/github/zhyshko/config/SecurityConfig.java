@@ -32,6 +32,7 @@ public class SecurityConfig {
                             requests.requestMatchers("/category/**").permitAll();
                             requests.requestMatchers("/search/**").permitAll();
                             requests.requestMatchers("/recommendations/**").permitAll();
+                            requests.requestMatchers("/test").permitAll();
                             requests.requestMatchers("/v2/api-docs",
                                     "/v3/api-docs",
                                     "/v3/api-docs/**",

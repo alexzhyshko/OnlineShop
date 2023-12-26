@@ -3,6 +3,7 @@ package io.github.zhyshko.mapper.dto.product;
 import io.github.zhyshko.dao.product.ProductAttributeDao;
 import io.github.zhyshko.dto.product.ProductAttributeData;
 import io.github.zhyshko.model.product.ProductAttribute;
+import io.github.zhyshko.service.product.ProductAttributeService;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,15 +13,14 @@ import java.util.List;
 public abstract class ProductAttributeMapper {
 
     @Autowired
-    protected ProductAttributeDao productAttributeDao;
+    protected ProductAttributeService productAttributeService;
 
-    public ProductAttribute toModel(ProductAttributeData orderData) {
-        if ( orderData == null ) {
+    public ProductAttribute toModel(ProductAttributeData productAttributeData) {
+        if ( productAttributeData == null ) {
             return null;
         }
 
-        return productAttributeDao.findByExternalId(orderData.getExternalId())
-                .orElseGet(() -> productAttributeDao.save(createProductAttribute(orderData)));
+        return productAttributeService.getOrCreate(createProductAttribute(productAttributeData));
     }
     public abstract ProductAttributeData toDto(ProductAttribute order);
 

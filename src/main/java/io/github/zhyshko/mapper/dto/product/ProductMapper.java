@@ -56,7 +56,7 @@ public abstract class ProductMapper {
         product.categories( categoryDataListToCategoryList( productData.getCategories() ) );
         product.name(productData.getName());
         product.price(productData.getPrice());
-        product.image(productData.getImage());
+        product.imageLink(productData.getImageLink());
         product.type(productTypeService.getOrCreate(productData.getType()));
 
         return product.build();

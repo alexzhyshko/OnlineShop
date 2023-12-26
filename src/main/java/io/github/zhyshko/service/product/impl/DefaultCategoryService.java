@@ -24,4 +24,10 @@ public class DefaultCategoryService implements CategoryService {
     public Category getByExternalId(UUID externalId) {
         return categoryDao.findByExternalId(externalId).orElseThrow(() -> new RuntimeException("No such category found"));
     }
+
+    @Override
+    public Category findOrCreate(Category category) {
+        return categoryDao.findByExternalId(category.getExternalId())
+                .orElseGet(() -> categoryDao.save(category));
+    }
 }

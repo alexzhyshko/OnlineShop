@@ -11,4 +11,5 @@ public interface CategoryService {
 
     Category getByExternalId(UUID externalId);
 
+    Category findOrCreate(Category category);
 }

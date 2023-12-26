@@ -1,5 +1,6 @@
 package io.github.zhyshko.dto.user;
 
+import io.github.zhyshko.dto.order.CartData;
 import io.github.zhyshko.model.order.Cart;
 import io.github.zhyshko.model.user.Address;
 import lombok.*;
@@ -17,7 +18,7 @@ public class UserData {
 
     private UUID externalId;
 
-    private Cart cart;
+    private CartData cart;
 
     private LocalDateTime timeCreated;
     private String email;

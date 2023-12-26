@@ -21,7 +21,7 @@ public class ProductData {
     private List<AuthorData> authors;
     private List<PublisherData> publishers;
     private List<CategoryData> categories;
-    private byte[] image;
+    private String imageLink;
     private Double price;
     private ProductTypeEnum type;
     private String name;

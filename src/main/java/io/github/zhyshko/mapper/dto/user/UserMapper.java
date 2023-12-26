@@ -3,6 +3,7 @@ package io.github.zhyshko.mapper.dto.user;
 import io.github.zhyshko.dao.order.DeliveryModeDao;
 import io.github.zhyshko.dao.user.UserDao;
 import io.github.zhyshko.dto.user.UserData;
+import io.github.zhyshko.mapper.dto.order.CartMapper;
 import io.github.zhyshko.model.order.*;
 import io.github.zhyshko.model.user.User;
 import io.github.zhyshko.service.order.CartService;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR, uses = {CartMapper.class})
 @Component
 public abstract class UserMapper {
 

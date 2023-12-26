@@ -40,10 +40,7 @@ public class Product extends Base {
     private Double price;
     @ManyToOne(cascade = CascadeType.ALL)
     private ProductType type;
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(length = 1000)
-    private byte[] image;
+    private String imageLink;
 
 
 }

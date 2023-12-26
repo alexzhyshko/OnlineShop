@@ -39,16 +39,6 @@ public class DefaultRecommendationsFacade implements RecommendationsFacade {
     private OrderWsDtoMapper orderWsDtoMapper;
 
     @Override
-    public List<ProductData> getHomepageRecommendations() {
-        return getRecommendations().stream()
-                .sorted(Comparator.comparingLong(RecommendationsResponse::score).reversed())
-                .map(r -> productService.get(r.externalId()))
-                .filter(Optional::isPresent)
-                .map(re -> productMapper.toDto(re.get()))
-                .toList();
-    }
-
-    @Override
     public List<RecommendationsResponse> getRecommendations() {
         UUID storeExternalId = storeService.getStoreExternalId();
         return userService.getCurrentUserExternalId()
@@ -60,6 +50,16 @@ public class DefaultRecommendationsFacade implements RecommendationsFacade {
                     return recommendationsClient.getGeneralRecommendations(storeExternalId);
                 })
                 .orElseGet(() -> recommendationsClient.getGeneralRecommendations(storeExternalId));
+    }
+
+    @Override
+    public List<ProductData> getHomepageRecommendations() {
+        return getRecommendations().stream()
+                .sorted(Comparator.comparingLong(RecommendationsResponse::score).reversed())
+                .map(r -> productService.get(r.externalId()))
+                .filter(Optional::isPresent)
+                .map(re -> productMapper.toDto(re.get()))
+                .toList();
     }
 
     @Override

@@ -7,4 +7,5 @@ import java.util.UUID;
 
 public interface PublisherService {
 
+    Publisher getOrCreate(Publisher publisher);
 }

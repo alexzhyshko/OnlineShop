@@ -15,4 +15,9 @@ public class DefaultPublisherService implements PublisherService {
     @Autowired
     private PublisherDao publisherDao;
 
+    @Override
+    public Publisher getOrCreate(Publisher publisher) {
+        return publisherDao.findByExternalId(publisher.getExternalId())
+                .orElseGet(() -> publisherDao.save(publisher));
+    }
 }
