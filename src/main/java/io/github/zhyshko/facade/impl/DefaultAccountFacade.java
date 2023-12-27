@@ -50,7 +50,6 @@ public class DefaultAccountFacade implements AccountFacade {
         existingUser.setFirstName(userData.getFirstName());
         existingUser.setLastName(userData.getLastName());
         existingUser.setEmail(userData.getEmail());
-        existingUser.setPassword(passwordEncoder.encode(userData.getPassword()));
         userService.save(existingUser);
     }
 
@@ -58,6 +57,10 @@ public class DefaultAccountFacade implements AccountFacade {
     public void changeAddress(AddressData addressData) {
         User existingUser = userService.getByExternalId(getCurrentUserExternalId());
         Address address = existingUser.getAddress();
+        if(address == null) {
+            address = Address.builder().externalId(UUID.randomUUID()).build();
+            existingUser.setAddress(address);
+        }
         address.setCity(addressData.getCity());
         address.setRoom(addressData.getRoom());
         address.setStreetNumber(addressData.getStreetNumber());

@@ -46,13 +46,6 @@ public abstract class OrderMapper {
         }
 
         return orderService.saveOrUpdate(createOrder(orderData));
-//        return orderDao.findByExternalId(orderData.getExternalId())
-//                .map(o -> {
-//                    o.setOrderEntries(orderEntryMapper.toModelList(orderData.getOrderEntries()));
-//                    return o;
-//                })
-//                .orElseGet(() -> orderDao.save(createOrder(orderData)));
-
     }
 
     @Mapping(target = "paymentMode", expression = "java(order.getPaymentMode().getName())")
