@@ -20,6 +20,6 @@ public class CartData {
     private DeliveryModeEnum deliveryMode;
     private List<CartEntryData> cartEntryList;
     private UUID externalId;
-    private AddressData addressData;
+    private AddressData address;
 
 }

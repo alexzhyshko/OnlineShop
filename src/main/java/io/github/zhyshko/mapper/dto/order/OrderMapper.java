@@ -8,10 +8,7 @@ import io.github.zhyshko.mapper.dto.user.AddressMapper;
 import io.github.zhyshko.mapper.dto.user.UserMapper;
 import io.github.zhyshko.model.order.Order;
 import io.github.zhyshko.model.order.OrderEntry;
-import io.github.zhyshko.service.order.DeliveryModeService;
-import io.github.zhyshko.service.order.OrderStatusService;
-import io.github.zhyshko.service.order.PaymentModeService;
-import io.github.zhyshko.service.order.PaymentStatusService;
+import io.github.zhyshko.service.order.*;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -29,7 +26,7 @@ public abstract class OrderMapper {
     @Autowired
     protected OrderEntryMapper orderEntryMapper;
     @Autowired
-    protected OrderDao orderDao;
+    protected OrderService orderService;
     @Autowired
     protected OrderStatusService orderStatusService;
     @Autowired
@@ -48,8 +45,13 @@ public abstract class OrderMapper {
             return null;
         }
 
-        return orderDao.findByExternalId(orderData.getExternalId())
-                .orElseGet(() -> orderDao.save(createOrder(orderData)));
+        return orderService.saveOrUpdate(createOrder(orderData));
+//        return orderDao.findByExternalId(orderData.getExternalId())
+//                .map(o -> {
+//                    o.setOrderEntries(orderEntryMapper.toModelList(orderData.getOrderEntries()));
+//                    return o;
+//                })
+//                .orElseGet(() -> orderDao.save(createOrder(orderData)));
 
     }
 

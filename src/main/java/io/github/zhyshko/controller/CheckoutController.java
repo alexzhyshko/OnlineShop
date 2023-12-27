@@ -31,7 +31,7 @@ public class CheckoutController {
         }
 
         return ResponseEntity
-                .status(valid ? HttpStatus.ACCEPTED : HttpStatus.BAD_REQUEST)
+                .status(valid ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
                 .body(valid ? "OK" : "NOK");
     }
 

@@ -36,6 +36,10 @@ public abstract class OrderEntryMapper {
         return entries.stream().map(this::toDto).toList();
     }
 
+    public List<OrderEntry> toModelList(List<OrderEntryData> orderEntryDataList) {
+        return orderEntryDataList.stream().map(this::toModel).toList();
+    }
+
     private OrderEntry createOrderEntry(OrderEntryData orderEntryData) {
         OrderEntry.OrderEntryBuilder<?, ?> orderEntry = OrderEntry.builder();
 

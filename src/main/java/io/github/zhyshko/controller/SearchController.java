@@ -17,19 +17,13 @@ public class SearchController {
     private SearchFacade searchFacade;
 
     @GetMapping("/{categoryExternalId}")
-    public List<ProductData> searchByCategory(@PathVariable UUID categoryExternalId, @RequestParam int page) {
-        return searchFacade.searchByCategory(categoryExternalId).stream()
-                .skip((page - 1) * 50)
-                .limit(page * 50)
-                .toList();
+    public List<ProductData> searchByCategory(@PathVariable UUID categoryExternalId) {
+        return searchFacade.searchByCategory(categoryExternalId);
     }
 
     @GetMapping
-    public List<ProductData> searchByTerm(@RequestParam String term, @RequestParam int page) {
-        return searchFacade.searchByTerm(term).stream()
-                .skip((page - 1) * 50)
-                .limit(page * 50)
-                .toList();
+    public List<ProductData> searchByTerm(@RequestParam String term) {
+        return searchFacade.searchByTerm(term);
     }
 
 

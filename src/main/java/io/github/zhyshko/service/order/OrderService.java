@@ -9,9 +9,11 @@ public interface OrderService {
 
     void save(Order order);
 
-    boolean userOrdersExist(UUID userExternalId);
+    boolean userPaidOrdersExist(UUID userExternalId);
 
     List<Order> getUserOrders(UUID currentUserExternalId);
 
     Order getByExternalId(UUID externalId);
+
+    Order saveOrUpdate(Order order);
 }

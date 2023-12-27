@@ -2,6 +2,7 @@ package io.github.zhyshko.facade.impl;
 
 import io.github.zhyshko.dto.order.*;
 import io.github.zhyshko.dto.review.ReviewEntryData;
+import io.github.zhyshko.dto.user.AddressData;
 import io.github.zhyshko.dto.user.UserData;
 import io.github.zhyshko.facade.MailFacade;
 import io.github.zhyshko.facade.OrderFacade;
@@ -9,9 +10,7 @@ import io.github.zhyshko.facade.RecommendationsFacade;
 import io.github.zhyshko.mapper.dto.order.CartMapper;
 import io.github.zhyshko.mapper.dto.order.OrderMapper;
 import io.github.zhyshko.mapper.dto.user.UserMapper;
-import io.github.zhyshko.model.order.Cart;
-import io.github.zhyshko.model.order.OrderStatusEnum;
-import io.github.zhyshko.model.order.PaymentStatusEnum;
+import io.github.zhyshko.model.order.*;
 import io.github.zhyshko.service.order.CartService;
 import io.github.zhyshko.service.order.OrderService;
 import io.github.zhyshko.service.user.UserService;
@@ -53,11 +52,11 @@ public class DefaultOrderFacade implements OrderFacade {
         CartData currentCartData = cartMapper.toDto(cartService.getCurrentCart());
         OrderData orderData = OrderData.builder()
                 .externalId(UUID.randomUUID())
-                .orderStatus(OrderStatusEnum.CREATED)
-                .paymentStatus(PaymentStatusEnum.NOT_PAID)
+                .orderStatus(cartData.getPaymentMode().equals(PaymentModeEnum.CASH) ? OrderStatusEnum.CREATED : OrderStatusEnum.IN_PROGRESS)
+                .paymentStatus(cartData.getPaymentMode().equals(PaymentModeEnum.CASH) ? PaymentStatusEnum.NOT_PAID : PaymentStatusEnum.PAID)
                 .paymentMode(cartData.getPaymentMode())
                 .deliveryMode(cartData.getDeliveryMode())
-                .address(cartData.getAddressData() == null ? currentUser.getAddress() : cartData.getAddressData())
+                .address(cartData.getAddress() == null ? currentUser.getAddress() : cartData.getAddress())
                 .timeCreated(LocalDateTime.now())
                 .owner(currentUser)
                 .payment(createEmptyPayment(currentCartData))
@@ -68,9 +67,13 @@ public class DefaultOrderFacade implements OrderFacade {
         currentCart.setCartEntryList(Collections.emptyList());
         cartService.save(currentCart);
 
+        if(cartData.getPaymentMode().equals(PaymentModeEnum.CASH)) {
+            recommendationsFacade.sendOrder(orderData);
+            mailFacade.sendReviewEmail(orderData);
+        }
+
         return orderData;
     }
-
 
     @Override
     public void payOrder(UUID orderExternalId) {

@@ -43,7 +43,7 @@ public class DefaultRecommendationsFacade implements RecommendationsFacade {
         UUID storeExternalId = storeService.getStoreExternalId();
         return userService.getCurrentUserExternalId()
                 .map(uuid -> {
-                    boolean userOrdersExist = orderService.userOrdersExist(uuid);
+                    boolean userOrdersExist = orderService.userPaidOrdersExist(uuid);
                     if(userOrdersExist) {
                         return recommendationsClient.getPersonalizedRecommendations(storeExternalId, uuid);
                     }
