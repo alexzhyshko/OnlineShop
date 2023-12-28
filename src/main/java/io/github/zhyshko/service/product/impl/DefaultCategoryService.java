@@ -17,7 +17,7 @@ public class DefaultCategoryService implements CategoryService {
 
     @Override
     public List<Category> getAll() {
-        return categoryDao.findAllBySupercategoryIdIsNull();
+        return categoryDao.findAll();
     }
 
     @Override
@@ -27,7 +27,7 @@ public class DefaultCategoryService implements CategoryService {
 
     @Override
     public Category findOrCreate(Category category) {
-        return categoryDao.findByExternalId(category.getExternalId())
+        return categoryDao.findByName(category.getName())
                 .orElseGet(() -> categoryDao.save(category));
     }
 }

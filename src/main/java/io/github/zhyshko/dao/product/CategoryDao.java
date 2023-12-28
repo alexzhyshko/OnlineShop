@@ -18,4 +18,6 @@ public interface CategoryDao extends JpaRepository<Category, Long> {
 SELECT c.* FROM categories as c WHERE c.supercategory_id IS NULL
 """, nativeQuery = true)
     List<Category> findAllBySupercategoryIdIsNull();
+
+    Optional<Category> findByName(String name);
 }

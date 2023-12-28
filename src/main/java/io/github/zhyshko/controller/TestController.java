@@ -29,12 +29,8 @@ public class TestController {
 
     @GetMapping
     @ResponseBody
-    public OrderWsDto t(HttpSession httpSession) {
-        OrderData o = databasePopulator.getOrder();
-
-        orderMapper.toModel(o);
-
-        return orderWsDtoMapper.toWsDto(o);
+    public void t(HttpSession httpSession) {
+        databasePopulator.populateDatabase();
     }
 
 }

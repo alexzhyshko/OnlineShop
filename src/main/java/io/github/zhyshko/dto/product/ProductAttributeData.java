@@ -13,7 +13,6 @@ import java.util.UUID;
 public class ProductAttributeData {
 
     private UUID externalId;
-    private String name;
     private String value;
 
 }

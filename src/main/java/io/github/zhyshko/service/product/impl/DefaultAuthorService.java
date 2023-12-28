@@ -17,7 +17,7 @@ public class DefaultAuthorService implements AuthorService {
 
     @Override
     public Author getOrCreate(Author author) {
-        return authorDao.findByExternalId(author.getExternalId())
+        return authorDao.findByFirstName(author.getFirstName())
                 .orElseGet(() -> authorDao.save(author));
     }
 }

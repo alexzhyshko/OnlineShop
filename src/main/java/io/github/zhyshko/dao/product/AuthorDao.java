@@ -14,4 +14,5 @@ public interface AuthorDao extends JpaRepository<Author, Long> {
 
     Optional<Author> findByExternalId(UUID externalId);
 
+    Optional<Author> findByFirstName(String firstName);
 }

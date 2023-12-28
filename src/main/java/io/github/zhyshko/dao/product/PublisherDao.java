@@ -14,4 +14,5 @@ public interface PublisherDao extends JpaRepository<Publisher, Long> {
 
     Optional<Publisher> findByExternalId(UUID externalId);
 
+    Optional<Publisher> findByName(String name);
 }

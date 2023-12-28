@@ -36,7 +36,6 @@ public abstract class ProductAttributeMapper {
 
         productAttribute.externalId( productAttributeData.getExternalId() );
         productAttribute.value(productAttributeData.getValue());
-        productAttribute.name(productAttributeData.getName());
 
         return productAttribute.build();
     }

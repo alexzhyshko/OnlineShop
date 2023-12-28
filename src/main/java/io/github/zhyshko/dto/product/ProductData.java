@@ -25,5 +25,6 @@ public class ProductData {
     private Double price;
     private ProductTypeEnum type;
     private String name;
+    private String isbn;
 
 }

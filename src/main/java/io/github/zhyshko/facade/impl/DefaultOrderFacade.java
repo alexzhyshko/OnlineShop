@@ -52,8 +52,8 @@ public class DefaultOrderFacade implements OrderFacade {
         CartData currentCartData = cartMapper.toDto(cartService.getCurrentCart());
         OrderData orderData = OrderData.builder()
                 .externalId(UUID.randomUUID())
-                .orderStatus(cartData.getPaymentMode().equals(PaymentModeEnum.CASH) ? OrderStatusEnum.CREATED : OrderStatusEnum.IN_PROGRESS)
-                .paymentStatus(cartData.getPaymentMode().equals(PaymentModeEnum.CASH) ? PaymentStatusEnum.NOT_PAID : PaymentStatusEnum.PAID)
+                .orderStatus(cartData.getPaymentMode().equals(PaymentModeEnum.CASH) ? OrderStatusEnum.IN_PROGRESS : OrderStatusEnum.CREATED)
+                .paymentStatus(cartData.getPaymentMode().equals(PaymentModeEnum.CASH) ? PaymentStatusEnum.PAID : PaymentStatusEnum.NOT_PAID)
                 .paymentMode(cartData.getPaymentMode())
                 .deliveryMode(cartData.getDeliveryMode())
                 .address(cartData.getAddress() == null ? currentUser.getAddress() : cartData.getAddress())

@@ -5,179 +5,124 @@ import io.github.zhyshko.dto.order.OrderEntryData;
 import io.github.zhyshko.dto.product.*;
 import io.github.zhyshko.dto.review.ReviewEntryData;
 import io.github.zhyshko.dto.user.UserData;
+import io.github.zhyshko.mapper.dto.product.CategoryMapper;
+import io.github.zhyshko.mapper.dto.product.ProductMapper;
 import io.github.zhyshko.model.order.DeliveryModeEnum;
 import io.github.zhyshko.model.order.OrderStatusEnum;
 import io.github.zhyshko.model.order.PaymentModeEnum;
 import io.github.zhyshko.model.order.PaymentStatusEnum;
+import io.github.zhyshko.model.product.Category;
+import io.github.zhyshko.model.product.ProductAttribute;
 import io.github.zhyshko.model.product.ProductTypeEnum;
+import io.github.zhyshko.service.product.CategoryService;
+import io.github.zhyshko.service.product.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 @Component
 public class DatabasePopulator {
 
-    private static final UUID PRODUCT_1_ID = UUID.fromString("31224ee2-3d49-4a6a-ba73-624ef0eab9b4");
-    private static final UUID PRODUCT_2_ID = UUID.fromString("d8678259-9d59-44ce-b96d-2a5c024cab32");
-    private static final UUID PRODUCT_3_ID = UUID.fromString("afb19e29-bca8-4b44-b6b7-c4928a249980");
+    @Autowired
+    private ProductMapper productMapper;
+    @Autowired
+    private ProductService productService;
+    @Autowired
+    private CategoryMapper categoryMapper;
+    @Autowired
+    private CategoryService categoryService;
 
-    private static final UUID USER_1_ID = UUID.fromString("d8678259-9d59-44ce-b96d-2a5c024cab32");
-    private static final UUID USER_2_ID = UUID.fromString("afb19e29-bca8-4b44-b6b7-c4928a249980");
-    private static final UUID SUBCATEGORY1_ID = UUID.randomUUID();
-    private static final UUID SUBCATEGORY2_ID = UUID.randomUUID();
-    private static final UUID CATEGORY_ID = UUID.randomUUID();
 
     public void populateDatabase() {
 
-        //OrderData orderData1 = createOrder(List.of(createOrderEntry1(1), createOrderEntry2(1)), createUserData1());
-        //OrderData orderData2 = createOrder(List.of(createOrderEntry3(-1), createOrderEntry1(1)), createUserData1());
-        //OrderData orderData3 = createOrder(List.of(createOrderEntry1(1)), createUserData2());
+        CategoryData b = createCategory("Бойовики", Collections.emptyList());
+        CategoryData p = createCategory("П'єси", Collections.emptyList());
+        CategoryData h = createCategory("Художні", List.of(b, p));
 
+        categoryMapper.toModel(b);
+        categoryMapper.toModel(p);
+        categoryMapper.toModel(h);
+
+        productService.saveOrUpdate(productMapper.toModel(createProduct("Крос у небуття", 126d, List.of("Юрій Сорока"),
+                List.of("Фоліо"), List.of("Українська", "Поліцейський детектив"), b, "https://static.yakaboo.ua/media/catalog/product/i/m/img_101685.jpg",
+                "978-966-03-9545-9")));
+
+        productService.saveOrUpdate(productMapper.toModel(createProduct("The Other People", 456d, List.of("С. Дж. Тюдор"),
+                List.of("Penguin","Книжковий клуб \"Клуб Сімейного Дозвілля\""), List.of("Англійська","Психологічний трилер","Кримінальний трилер"), b, "https://static.yakaboo.ua/media/catalog/product/9/7/9780241371282.jpg",
+                "9781405939621")));
+
+        productService.saveOrUpdate(productMapper.toModel(createProduct("Характерник", 245d, List.of("Василь Шкляр"),
+                List.of("Книжковий клуб \"Клуб Сімейного Дозвілля\""), List.of("Українська","Історична проза"), b, "https://static.yakaboo.ua/media/catalog/product/h/a/harakternik_front.jpg",
+                "978-617-12-6841-8")));
+
+        productService.saveOrUpdate(productMapper.toModel(createProduct("Command and Control", 1396d, List.of("Марк Кемерон"),
+                List.of("Little, Brown Book Group","Sphere"), List.of("Англійська","Сучасна проза","Шпигуни і Політики"), b, "https://static.yakaboo.ua/media/catalog/product/7/1/71cl5i0rrml._sl1500_.jpg",
+                "9781408727843")));
+
+        productService.saveOrUpdate(productMapper.toModel(createProduct("Gideon's Corpse", 625d, List.of("Лінкольн Чайлд"," Дуглас Престон"),
+                List.of("Orion"), List.of("Сучасна проза","Англійська","Психологічний трилер"), b, "https://static.yakaboo.ua/media/catalog/product/7/1/714sp5kuexl.jpg",
+                "9781398718807")));
     }
 
-    public OrderData getOrder() {
-        return createOrder(List.of(createOrderEntry1(1), createOrderEntry2(1), createOrderEntry3(1)), createUserData1());
-    }
-
-    private OrderData createOrder(List<OrderEntryData> orderEntryDataList, UserData userData) {
-        return OrderData.builder()
-                .externalId(UUID.randomUUID())
-                .owner(userData)
-                .orderEntries(orderEntryDataList)
-                .timeCreated(LocalDateTime.now())
-                .paymentStatus(PaymentStatusEnum.NOT_PAID)
-                .deliveryMode(DeliveryModeEnum.HOME)
-                .paymentMode(PaymentModeEnum.CASH)
-                .orderStatus(OrderStatusEnum.CREATED)
-                .build();
-    }
-
-    private UserData createUserData1() {
-        return UserData.builder()
-                .externalId(USER_1_ID)
-                .build();
-    }
-
-    private UserData createUserData2() {
-        return UserData.builder()
-                .externalId(USER_2_ID)
-                .build();
-    }
-
-    private OrderEntryData createOrderEntry1(int mark) {
-        return OrderEntryData.builder()
-                .externalId(UUID.randomUUID())
-                .timeCreated(LocalDateTime.now())
-                .product(createProduct1())
-                .reviewEntry(createReviewEntry(mark))
-                .build();
-    }
-
-    private OrderEntryData createOrderEntry2(int mark) {
-        return OrderEntryData.builder()
-                .externalId(UUID.randomUUID())
-                .timeCreated(LocalDateTime.now())
-                .product(createProduct2())
-                .reviewEntry(createReviewEntry(mark))
-                .build();
-    }
-
-    private OrderEntryData createOrderEntry3(int mark) {
-        return OrderEntryData.builder()
-                .externalId(UUID.randomUUID())
-                .timeCreated(LocalDateTime.now())
-                .product(createProduct3())
-                .reviewEntry(createReviewEntry(mark))
-                .build();
-    }
-
-    private ReviewEntryData createReviewEntry(int mark) {
-        return ReviewEntryData.builder()
-                .externalId(UUID.randomUUID())
-                .mark(mark)
-                .timeCreated(LocalDateTime.now())
-                .build();
-    }
-
-    private ProductData createProduct1() {
+    private ProductData createProduct(String name, double price, List<String> authors, List<String> publishers
+            , List<String> productAttributes, CategoryData category, String imageLink, String isbn) {
         return ProductData.builder()
-                .externalId(PRODUCT_1_ID)
-                .productAttributes(List.of(createProductAttributeData()))
-                .authors(List.of(createAuthorData()))
-                .publishers(List.of(createPublisherData()))
-                .categories(List.of(createSubcategory2Data()))
-                .name("aadadad")
-                .type(ProductTypeEnum.PHYSICAL)
-                .price(10.99d)
-                .build();
-    }
-
-    private ProductData createProduct2() {
-        return ProductData.builder()
-                .externalId(PRODUCT_2_ID)
-                .productAttributes(List.of(createProductAttributeData()))
-                .authors(List.of(createAuthorData()))
-                .publishers(List.of(createPublisherData()))
-                .categories(List.of(createSubcategory1Data()))
-                .name("aadadad2")
-                .type(ProductTypeEnum.PHYSICAL)
-                .price(1.99d)
-                .build();
-    }
-
-    private ProductData createProduct3() {
-        return ProductData.builder()
-                .externalId(PRODUCT_3_ID)
-                .productAttributes(List.of(createProductAttributeData()))
-                .authors(List.of(createAuthorData()))
-                .publishers(List.of(createPublisherData()))
-                .categories(List.of(createCategoryData()))
-                .name("aadadad3")
-                .type(ProductTypeEnum.PHYSICAL)
-                .price(3.99d)
-                .build();
-    }
-
-    private CategoryData createCategoryData() {
-        return CategoryData.builder()
-                .externalId(CATEGORY_ID)
-                .subcategories(List.of(createSubcategory1Data()))
-                .name("Category")
-                .build();
-    }
-
-    private CategoryData createSubcategory1Data() {
-        return CategoryData.builder()
-                .externalId(SUBCATEGORY1_ID)
-                .subcategories(List.of(createSubcategory2Data()))
-                .name("Subcategory 1")
-                .build();
-    }
-
-    private CategoryData createSubcategory2Data() {
-        return CategoryData.builder()
-                .externalId(SUBCATEGORY2_ID)
-                .name("Subcategory 2")
-                .build();
-    }
-
-    private PublisherData createPublisherData() {
-        return PublisherData.builder()
+                .name(name)
+                .isbn(isbn)
+                .type(ProductTypeEnum.DIGITAL)
+                .price(price)
                 .externalId(UUID.randomUUID())
+                .imageLink(imageLink)
+                .categories(List.of(category))
+                .authors(createAuthors(authors))
+                .publishers(createPublishers(publishers))
+                .productAttributes(createAttributes(productAttributes))
                 .build();
     }
 
-    private AuthorData createAuthorData() {
+    private List<ProductAttributeData> createAttributes(List<String> productAttributes) {
+        return productAttributes.stream().map(s -> createProductAttribute(s)).toList();
+    }
+
+    private List<PublisherData> createPublishers(List<String> publishers) {
+        return publishers.stream().map(s -> createPublisher(s)).toList();
+    }
+
+    private List<AuthorData> createAuthors(List<String> authors) {
+        return authors.stream().map(s -> createAuthor(s)).toList();
+    }
+
+    private CategoryData createCategory(String name, List<CategoryData> subcategories){
+        return CategoryData.builder()
+                .externalId(UUID.randomUUID())
+                .name(name)
+                .subcategories(subcategories)
+                .build();
+    }
+
+    private AuthorData createAuthor(String name) {
         return AuthorData.builder()
                 .externalId(UUID.randomUUID())
+                .firstName(name)
                 .build();
     }
 
-    private ProductAttributeData createProductAttributeData() {
-        return ProductAttributeData.builder()
+    private PublisherData createPublisher(String name) {
+        return PublisherData.builder()
                 .externalId(UUID.randomUUID())
+                .name(name)
                 .build();
     }
+
+    private ProductAttributeData createProductAttribute(String value) {
+        return ProductAttributeData.builder()
+                .externalId(UUID.randomUUID())
+                .value(value)
+                .build();
+    }
+
 }

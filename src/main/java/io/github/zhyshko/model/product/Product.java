@@ -41,6 +41,7 @@ public class Product extends Base {
     @ManyToOne(cascade = CascadeType.ALL)
     private ProductType type;
     private String imageLink;
+    private String isbn;
 
 
 }

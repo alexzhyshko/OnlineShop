@@ -14,4 +14,5 @@ public interface ProductAttributeDao extends JpaRepository<ProductAttribute, Lon
 
     Optional<ProductAttribute> findByExternalId(UUID externalId);
 
+    Optional<ProductAttribute> findByValue(String value);
 }

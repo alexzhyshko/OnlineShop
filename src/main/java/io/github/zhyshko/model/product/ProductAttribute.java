@@ -15,7 +15,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class ProductAttribute extends Base {
 
-    private String name;
     private String value;
 
 }
