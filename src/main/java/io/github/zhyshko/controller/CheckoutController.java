@@ -35,4 +35,9 @@ public class CheckoutController {
                 .body(valid ? "OK" : "NOK");
     }
 
+    @GetMapping("/get")
+    public OrderData getOrder(@RequestParam UUID orderExternalId) {
+        return orderFacade.getOrder(orderExternalId);
+    }
+
 }

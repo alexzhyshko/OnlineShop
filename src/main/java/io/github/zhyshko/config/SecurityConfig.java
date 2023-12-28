@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> {
                             requests.requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register", "/auth/refresh").permitAll();
                             requests.requestMatchers("/category/**").permitAll();
+                            requests.requestMatchers("/product/**").permitAll();
                             requests.requestMatchers("/search/**").permitAll();
                             requests.requestMatchers("/recommendations/**").permitAll();
                             requests.requestMatchers("/test").permitAll();
