@@ -19,7 +19,7 @@ public class RecommendationController {
 
     @GetMapping
     public List<ProductData> getRecommendations() {
-        return recommendationsFacade.getHomepageRecommendations().stream().limit(10).toList();
+        return recommendationsFacade.getHomepageRecommendations().stream().limit(4).toList();
     }
 
 }
